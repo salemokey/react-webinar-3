@@ -41,10 +41,15 @@ class Store {
   /**
    * Добавление новой записи
    */
+  
+  
+  
+  
   addItem() {
+    const countListItems = this.state.list.length;
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: this.state.list.length + 1, title: 'Новая запись' }],
+      list: [...this.state.list, { code: countListItems + 1, title: 'Новая запись', totalSelectClickCount: 0 }],
     });
   }
 
@@ -58,7 +63,6 @@ class Store {
       list: this.state.list.filter(item => item.code !== code),
     });
   }
-
   /**
    * Выделение записи по коду
    * @param code
@@ -66,12 +70,27 @@ class Store {
   selectItem(code) {
     this.setState({
       ...this.state,
+      selectedItemCode: code,
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
+        } else if (this.state.selectedItemCode === item.code) {
+          item.selected = false;
         }
         return item;
       }),
+    });
+  }
+/**
+ * Счет количества выделения пункта
+ * @param code 
+ */
+  getClickCount(code) {
+    this.setState({
+      ...this.state,
+      list: this.state.list.map(item =>
+        item.code === code ? { ...item, totalSelectClickCount: item.totalSelectClickCount + 1} : item,
+      ),
     });
   }
 }
