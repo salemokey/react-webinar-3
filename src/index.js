@@ -15,6 +15,7 @@ const store = new Store({
     { code: 7, title: 'Седьмая запись', totalSelectClickCount: 0 },
   ],
   selectedItemCode: null,
+  countListItems: null,
 });
 
 const root = createRoot(document.getElementById('root'));

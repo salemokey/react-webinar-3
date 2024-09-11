@@ -3,8 +3,9 @@
  */
 class Store {
   constructor(initState = {}) {
-    this.state = initState;
-    this.listeners = []; // Слушатели изменений состояния
+    this.state = { ...initState, countListItems: initState.list.length }; // Начальное состояние
+    this.listeners = [];
+    // Слушатели изменений состояния
   }
 
   /**
@@ -41,15 +42,14 @@ class Store {
   /**
    * Добавление новой записи
    */
-  
-  
-  
-  
   addItem() {
-    const countListItems = this.state.list.length;
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: countListItems + 1, title: 'Новая запись', totalSelectClickCount: 0 }],
+      list: [
+        ...this.state.list,
+        { code: this.state.countListItems + 1, title: 'Новая запись', totalSelectClickCount: 0 },
+      ],
+      countListItems: this.state.countListItems + 1,
     });
   }
 
@@ -81,15 +81,17 @@ class Store {
       }),
     });
   }
-/**
- * Счет количества выделения пункта
- * @param code 
- */
+  /**
+   * Счет количества выделения пункта
+   * @param code
+   */
   getClickCount(code) {
     this.setState({
       ...this.state,
       list: this.state.list.map(item =>
-        item.code === code ? { ...item, totalSelectClickCount: item.totalSelectClickCount + 1} : item,
+        item.code === code
+          ? { ...item, totalSelectClickCount: item.totalSelectClickCount + 1 }
+          : item,
       ),
     });
   }
