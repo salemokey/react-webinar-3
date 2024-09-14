@@ -3,7 +3,11 @@
  */
 class Store {
   constructor(initState = {}) {
-    this.state = { ...initState, countListItems: initState.list.length }; // Начальное состояние
+    this.state = initState; // Начальное состояние
+    this.countListItems = Math.max(
+      0,
+      ...this.state.list.map(item => item.code),
+    ); // Максимальный код в массиве
     this.listeners = [];
     // Слушатели изменений состояния
   }
@@ -43,13 +47,17 @@ class Store {
    * Добавление новой записи
    */
   addItem() {
+    this.countListItems += 1;
     this.setState({
       ...this.state,
       list: [
         ...this.state.list,
-        { code: this.state.countListItems + 1, title: 'Новая запись', totalSelectClickCount: 0 },
+        {
+          code: this.countListItems,
+          title: 'Новая запись',
+          totalSelectClickCount: 0,
+        },
       ],
-      countListItems: this.state.countListItems + 1,
     });
   }
 
@@ -82,7 +90,7 @@ class Store {
     });
   }
   /**
-   * Счет количества выделения пункта
+   * Счет количества выделений пункта
    * @param code
    */
   getClickCount(code) {
@@ -94,6 +102,13 @@ class Store {
           : item,
       ),
     });
+  }
+
+  declension(int, array) {
+    return (
+      (array = array || ['раз', 'раза', 'раз']) &&
+      array[int % 100 > 4 && int % 100 < 20 ? 2 : [2, 0, 1, 1, 1, 2][int % 10 < 5 ? int % 10 : 5]]
+    );
   }
 }
 

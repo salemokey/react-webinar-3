@@ -60,7 +60,5 @@ body {
   padding: 20px 20px 20px 10px;
 }
 .Item-count_selected {
-  padding-top: 10px;
-  text-align: center;
-  font-weight: bold;
+  display: inline-block;
 }
