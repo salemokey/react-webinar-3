@@ -52,10 +52,24 @@ class Store {
   }
 
   addItemCart(item) {
-    this.setState({
-      ...this.state,
-      cart: [...this.state.cart, item],
-    });
+    const itemExist = this.state.cart.some(cartItem => cartItem.code === item.code);
+
+    if (!itemExist)
+      this.setState({
+        ...this.state,
+        cart: [...this.state.cart, { ...item, count: 1 }],
+      });
+    else
+      this.setState({
+        ...this.state,
+        cart: [
+          ...this.state.cart.map(itemCart =>
+            itemCart.code === item.code
+              ? { ...itemCart, price: itemCart.price + item.price, count: itemCart.count + 1 }
+              : itemCart,
+          ),
+        ],
+      });
     console.log(this.state.cart);
   }
 
