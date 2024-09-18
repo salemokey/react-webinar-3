@@ -46,8 +46,17 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: generateCode(), title: 'Новая запись' }],
+      listProducts: [...this.state.list, { item }],
     });
+    console.log(this.state.listProducts);
+  }
+
+  addItemCart(item) {
+    this.setState({
+      ...this.state,
+      cart: [...this.state.cart, item],
+    });
+    console.log(this.state.cart);
   }
 
   /**

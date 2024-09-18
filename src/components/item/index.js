@@ -18,6 +18,9 @@ function Item(props) {
       e.stopPropagation();
       props.onDelete(props.item.code);
     },
+    onAddItemCart: () => {
+      props.onAddItemCart(props.item)
+    }
   };
 
   return (
@@ -37,7 +40,7 @@ function Item(props) {
           : ''}
       </div>
       <div className="Item-actions">
-        <button onClick={callbacks.onDelete}>Удалить</button>
+        <button onClick={callbacks.onAddItemCart}>Удалить</button>
       </div>
     </div>
   );

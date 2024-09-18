@@ -30,6 +30,10 @@ function App({ store }) {
     onAddItem: useCallback(() => {
       store.addItem();
     }, [store]),
+
+    onAddItemCart: useCallback((item) => {
+      store.addItemCart(item);
+    }, [store]),
   };
 
   return (
@@ -40,6 +44,7 @@ function App({ store }) {
         list={list}
         onDeleteItem={callbacks.onDeleteItem}
         onSelectItem={callbacks.onSelectItem}
+        onAddItemCart={callbacks.onAddItemCart}
       />
     </PageLayout>
   );
