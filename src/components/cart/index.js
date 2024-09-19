@@ -3,8 +3,14 @@ import Controls from '../controls';
 import Item from '../item';
 import './style.css';
 import Modal from '../modal';
+import { plural } from '../../utils';
 function Cart({ cart, totalCartItemsCount, totalCartPrice, onDeleteItemCart }) {
   const [openCart, setOpenCart] = useState(false);
+  const variants = {
+    one: 'товар',
+    few: 'товара',
+    many: 'товаров',
+  };
 
   return (
     <div className="Cart">
@@ -12,14 +18,24 @@ function Cart({ cart, totalCartItemsCount, totalCartPrice, onDeleteItemCart }) {
         <div className="Status-cart__status">
           В корзине:{' '}
           <span className="b">
-            {cart.length > 0 ? `${totalCartItemsCount} / ${totalCartPrice}` : 'Пусто'}
+            {cart.length > 0
+              ? `${totalCartItemsCount} ${plural(totalCartItemsCount, variants)} / ${totalCartPrice} ₽`
+              : 'Пусто'}
           </span>
         </div>
         <div className="Status-cart__button">
           <button onClick={() => setOpenCart(!openCart)}>Перейти</button>
         </div>
       </div>
-      <Modal cart={cart} />
+      {openCart && (
+        <Modal
+          cart={cart}
+          onDeleteItemCart={onDeleteItemCart}
+          openCart={openCart}
+          setOpenCart={setOpenCart}
+          totalCartPrice={totalCartPrice}
+        />
+      )}
     </div>
   );
 }

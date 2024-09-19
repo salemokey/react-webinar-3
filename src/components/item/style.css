@@ -1,9 +1,11 @@
+:root {
+  --grey-text-color: #404040;
+}
+
 .Item {
   display: flex;
   justify-content: flex-start;
-  transition: background-color 1s;
 }
-
 
 .Item-code {
   padding: 20px 10px 20px 20px;
@@ -12,6 +14,23 @@
 .Item-title {
   width: 100%;
   padding: 20px 10px;
+}
+
+.Item-price {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  padding: 20px 10px;
+  color: var(--grey-text-color);
+  font-size: 18px;
+}
+
+.Item-count {
+  display: flex;
+  justify-content: end;
+  padding: 20px 10px;
+  color: var(--grey-text-color);
+  font-size: 18px;
 }
 
 .Item-actions {

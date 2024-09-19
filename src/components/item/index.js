@@ -20,11 +20,14 @@ function Item(props) {
     <div className="Item">
       <div className="Item-code">{props.item.code}</div>
       <div className="Item-title">{props.item.title}</div>
-      <div className="Item-price">{props.item.price}</div>
-      <div className="Item-count"></div>
+      <div className="Item-price">{props.item.price} &#8381;</div>
+      {props.item.count > 0 && <div className="Item-count">{props.item.count}шт</div>}
       <div className="Item-actions">
-        {props.isInCart ? <button onClick={callbacks.onDeleteItemCart}>Удалить</button> : <button onClick={callbacks.onAddItemCart}>Добавить</button>}
-        
+        {props.isInCart ? (
+          <button onClick={callbacks.onDeleteItemCart}>Удалить</button>
+        ) : (
+          <button onClick={callbacks.onAddItemCart}>Добавить</button>
+        )}
       </div>
     </div>
   );
