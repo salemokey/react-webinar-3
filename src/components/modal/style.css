@@ -1,0 +1,32 @@
+.Status-cart {
+  display: flex;
+  justify-content: flex-end;
+}
+.Status-cart__status {
+  padding: 20px 0;
+  font-size: 18px;
+}
+.Status-cart__status .b {
+  font-weight: 700;
+}
+.Status-cart__button {
+  display: flex;
+  padding: 20px;
+}
+.Modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.Modal__content {
+  background-color: white;
+  position: absolute;
+  width: 960px;
+}
+

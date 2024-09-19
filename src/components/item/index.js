@@ -11,14 +11,20 @@ function Item(props) {
     onAddItemCart: () => {
       props.onAddItemCart(props.item);
     },
+    onDeleteItemCart: () => {
+      props.onDeleteItemCart(props.item);
+    },
   };
 
   return (
     <div className="Item">
       <div className="Item-code">{props.item.code}</div>
       <div className="Item-title">{props.item.title}</div>
+      <div className="Item-price">{props.item.price}</div>
+      <div className="Item-count"></div>
       <div className="Item-actions">
-        <button onClick={callbacks.onAddItemCart}>Добавить</button>
+        {props.isInCart ? <button onClick={callbacks.onDeleteItemCart}>Удалить</button> : <button onClick={callbacks.onAddItemCart}>Добавить</button>}
+        
       </div>
     </div>
   );

@@ -13,11 +13,13 @@ import Cart from './components/cart';
 function App({ store }) {
   const list = store.getState().list;
   const cart = store.getState().cart;
+  const totalCartItemsCount = store.getState().totalCartItemsCount;
+  const totalCartPrice = store.getState().totalCartPrice;
 
   const callbacks = {
-    onDeleteItem: useCallback(
-      code => {
-        store.deleteItem(code);
+    onDeleteItemCart: useCallback(
+      item => {
+        store.deleteItemCart(item);
       },
       [store],
     ),
@@ -28,23 +30,25 @@ function App({ store }) {
       },
       [store],
     ),
-
-    onAddItem: useCallback(() => {
-      store.addItem();
-    }, [store]),
-
-    onAddItemCart: useCallback((item) => {
-      store.addItemCart(item);
-    }, [store]),
+    onAddItemCart: useCallback(
+      item => {
+        store.addItemCart(item);
+      },
+      [store],
+    ),
   };
 
   return (
     <PageLayout>
-      <Head title="Приложение на чистом JS" />
-      <Cart onAdd={callbacks.onAddItem} cart={cart}/>
+      <Head title="Магазин" />
+      <Cart
+        onDeleteItemCart={callbacks.onDeleteItemCart}
+        totalCartItemsCount={totalCartItemsCount}
+        totalCartPrice={totalCartPrice}
+        cart={cart}
+      />
       <List
         list={list}
-        onDeleteItem={callbacks.onDeleteItem}
         onSelectItem={callbacks.onSelectItem}
         onAddItemCart={callbacks.onAddItemCart}
       />

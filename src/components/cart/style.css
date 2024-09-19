@@ -1,5 +1,17 @@
-.Controls {
+.Status-cart {
   display: flex;
   justify-content: flex-end;
+}
+.Status-cart__status {
+  padding: 20px 0;
+  font-size: 18px;
+}
+.Status-cart__status .b {
+  font-weight: 700;
+}
+.Status-cart__button {
+  display: flex;
   padding: 20px;
 }
+
+

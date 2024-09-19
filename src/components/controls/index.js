@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
-function Controls({ onAdd }) {
- const [openCart, setOpenCart] = useState(false)
- 
-  return (
-    <div className="Controls">
-      <button onClick={() => onAdd()}>Перейти</button>
-    </div>
-  );
+function Controls({ openCart, setOpenCart }) {
+  // return (
+  //   <div className="Controls">
+  //     <button onClick={() => ()}>Перейти</button>
+  //   </div>
+  // );
 }
 
 Controls.propTypes = {

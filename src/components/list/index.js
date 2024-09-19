@@ -8,7 +8,7 @@ function List({ list, onDeleteItem, onSelectItem, onAddItemCart }) {
     <div className="List">
       {list.map(item => (
         <div key={item.code} className="List-item">
-          <Item item={item} onDelete={onDeleteItem} onSelect={onSelectItem} onAddItemCart={onAddItemCart} />
+          <Item item={item} onAddItemCart={onAddItemCart} />
         </div>
       ))}
     </div>
