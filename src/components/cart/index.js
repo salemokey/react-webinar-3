@@ -22,7 +22,7 @@ function Cart({ cart, totalCartItemsCount, totalCartPrice, onDeleteItemCart }) {
           </span>
         </div>
         <div className="Status-cart__button">
-          <button onClick={() => setOpenCart(!openCart)}>Перейти</button>
+          <button className='openCart-btn' onClick={() => setOpenCart(!openCart)}>Перейти</button>
         </div>
       </div>
       {openCart && (
