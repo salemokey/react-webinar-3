@@ -22,13 +22,12 @@ function App({ store }) {
       },
       [store],
     ),
-
-    onSelectItem: useCallback(
-      code => {
-        store.selectItem(code);
-      },
-      [store],
-    ),
+    // onSelectItem: useCallback(
+    //   code => {
+    //     store.selectItem(code);
+    //   },
+    //   [store],
+    // ),
     onAddItemCart: useCallback(
       item => {
         store.addItemCart(item);
@@ -48,7 +47,6 @@ function App({ store }) {
       />
       <List
         list={list}
-        onSelectItem={callbacks.onSelectItem}
         onAddItemCart={callbacks.onAddItemCart}
       />
     </PageLayout>
