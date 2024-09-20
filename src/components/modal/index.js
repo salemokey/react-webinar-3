@@ -10,6 +10,7 @@ function Modal({
   openCart,
   setOpenCart = () => {},
 }) {
+  debugger;
   return (
     <div className="Modal">
       <div className="Modal__content">
@@ -56,4 +57,4 @@ Modal.propTypes = {
   setOpenCart: PropTypes.func,
 };
 
-export default React.memo(Modal);
+export default Modal;

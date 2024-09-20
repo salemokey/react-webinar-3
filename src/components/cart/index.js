@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Controls from '../controls';
-import Item from '../item';
 import './style.css';
 import Modal from '../modal';
 import { plural } from '../../utils';
