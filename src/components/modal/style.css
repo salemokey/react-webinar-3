@@ -1,18 +1,4 @@
-.Status-cart {
-  display: flex;
-  justify-content: flex-end;
-}
-.Status-cart__status {
-  padding: 20px 0;
-  font-size: 18px;
-}
-.Status-cart__status .b {
-  font-weight: 700;
-}
-.Status-cart__button {
-  display: flex;
-  padding: 20px;
-}
+
 .Modal {
   display: flex;
   justify-content: center;
@@ -25,12 +11,20 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 .Modal__content {
+  display:grid;
+  grid-template-columns: repeat(12, 1fr) ;
+  grid-column-gap: 24px;
   background-color: white;
   position: absolute;
   width: 960px;
   border-radius: 10px;
 }
-.Modal__content .Head {
+
+.Header-container{
+  grid-column: span 12;
+}
+
+.Header-container .Head {
   display: flex;
   justify-content: space-between;
   padding: 20px;
@@ -43,21 +37,23 @@
   padding: 12px;
 }
 .Footer {
-  display: flex;
-  justify-content: flex-end;
+  grid-column: 10 / span 2 ;
+  width: 100%;
+  justify-self: end;
   padding: 0 20px 70px;
 }
 .Footer-content {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 20px 80px;
+  padding: 20px 0 0 20px;
   color: black;
   font-weight: 700;
   font-size: 18px;
 }
-.Footer-content span {
-  padding-right: 20px;
-}
+
 .Modal-content__list-item {
+  grid-column: span 12;
   border-bottom: 1px dashed #ccc;
 }
+

@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import { plural } from '../../utils';
 import './style.css';
 
-function Item(props) {
-  // Счётчик выделений
-  const [count, setCount] = useState(0);
-
+function Item({ onAddItemCart = () => {}, onDeleteItemCart = () => {}, ...props }) {
+  console.log(props);
   const callbacks = {
-    onAddItemCart: () => {
-      props.onAddItemCart(props.item);
+    AddItemCart: () => {
+      onAddItemCart(props.item);
     },
-    onDeleteItemCart: () => {
-      props.onDeleteItemCart(props.item);
+    DeleteItemCart: () => {
+      onDeleteItemCart(props.item);
     },
   };
 
@@ -24,9 +22,9 @@ function Item(props) {
       {props.item.count > 0 && <div className="Item-count">{props.item.count}шт</div>}
       <div className="Item-actions">
         {props.isInCart ? (
-          <button onClick={callbacks.onDeleteItemCart}>Удалить</button>
+          <button onClick={callbacks.DeleteItemCart}>Удалить</button>
         ) : (
-          <button onClick={callbacks.onAddItemCart}>Добавить</button>
+          <button onClick={callbacks.AddItemCart}>Добавить</button>
         )}
       </div>
     </div>
@@ -40,11 +38,7 @@ Item.propTypes = {
     count: PropTypes.number,
   }).isRequired,
   onAddItemCart: PropTypes.func,
-};
-
-Item.defaultProps = {
-  onDelete: () => {},
-  onSelect: () => {},
+  onDeleteItemCart: PropTypes.func,
 };
 
 export default React.memo(Item);
