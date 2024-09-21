@@ -79,17 +79,15 @@ class Store {
    * @param code
    */
   deleteItemCart(item) {
-    const newTotalCartPrice = this.totalCartPrice - item.price;
-    const newTotalCartItemsCount = this.totalCartItemsCount - item.count;
+    this.totalCartPrice -= item.price;
+    this.totalCartItemsCount -= item.count;
     this.setState({
       ...this.state,
       // Новый список, в котором не будет удаляемой записи
       cart: this.state.cart.filter(elem => elem.code !== item.code),
-      totalCartPrice: newTotalCartPrice,
-      totalCartItemsCount: newTotalCartItemsCount,
+      totalCartPrice: this.totalCartPrice,
+      totalCartItemsCount: this.totalCartItemsCount,
     });
-    this.totalCartItemsCount = newTotalCartItemsCount;
-    this.totalCartPrice = newTotalCartPrice;
   }
 
   /**

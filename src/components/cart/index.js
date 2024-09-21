@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './style.css';
 import Modal from '../modal';
 import { plural } from '../../utils';
+import PropTypes from 'prop-types';
+
 function Cart({ cart, totalCartItemsCount, totalCartPrice, onDeleteItemCart }) {
   const [openCart, setOpenCart] = useState(false);
   const variants = {
@@ -17,12 +19,14 @@ function Cart({ cart, totalCartItemsCount, totalCartPrice, onDeleteItemCart }) {
           В корзине:{' '}
           <span className="b">
             {cart.length > 0
-              ? `${totalCartItemsCount} ${plural(totalCartItemsCount, variants)} / ${totalCartPrice} ₽`
+              ? `${cart.length} ${plural(cart.length, variants)} / ${totalCartPrice} ₽`
               : 'Пусто'}
           </span>
         </div>
         <div className="Status-cart__button">
-          <button className='openCart-btn' onClick={() => setOpenCart(!openCart)}>Перейти</button>
+          <button className="openCart-btn" onClick={() => setOpenCart(!openCart)}>
+            Перейти
+          </button>
         </div>
       </div>
       {openCart && (
@@ -38,9 +42,11 @@ function Cart({ cart, totalCartItemsCount, totalCartPrice, onDeleteItemCart }) {
   );
 }
 
-// Controls.propTypes = {
-//   onAdd: PropTypes.func,
-// };
+Cart.propTypes = {
+  totalCartItemsCount: PropTypes.number,
+  totalCartPrice: PropTypes.number,
+  onDeleteItemCart: PropTypes.func,
+};
 
 // Controls.defaultProps = {
 //   onAdd: () => {},
