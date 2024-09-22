@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
+import { formatPrice } from '../../utils';
 
 function Item({ onAddItemCart = () => {}, onDeleteItemCart = () => {}, ...props }) {
-  console.log(props);
+  const price = new Intl.NumberFormat('ru-RU', {
+    style: 'decimal',
+    currency: 'RUB',
+  }).format(props.item.price);
   const callbacks = {
     AddItemCart: () => {
       onAddItemCart(props.item);
@@ -17,8 +21,8 @@ function Item({ onAddItemCart = () => {}, onDeleteItemCart = () => {}, ...props 
     <div className="Item">
       <div className="Item-code">{props.item.code}</div>
       <div className="Item-title">{props.item.title}</div>
-      <div className="Item-price">{props.item.price} &#8381;</div>
-      {props.item.count > 0 && <div className="Item-count">{props.item.count}шт</div>}
+      <div className="Item-price">{price} &#8381;</div>
+      {props.children}
       <div className="Item-actions">
         {props.isInCart ? (
           <button onClick={callbacks.DeleteItemCart}>Удалить</button>
@@ -37,6 +41,7 @@ Item.propTypes = {
     count: PropTypes.number,
     price: PropTypes.number,
   }).isRequired,
+  children: PropTypes.node,
   onAddItemCart: PropTypes.func,
   onDeleteItemCart: PropTypes.func,
 };

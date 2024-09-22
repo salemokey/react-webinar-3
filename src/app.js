@@ -3,6 +3,7 @@ import List from './components/list';
 import Head from './components/head';
 import PageLayout from './components/page-layout';
 import Cart from './components/cart';
+import Modal from './components/modal';
 
 /**
  * Приложение
@@ -11,9 +12,13 @@ import Cart from './components/cart';
  */
 function App({ store }) {
   const list = store.getState().list;
-  const cart = store.getState().cart;
+  const countInCart = list.filter(item => item.isInCart).length;
   const totalCartItemsCount = store.getState().totalCartItemsCount;
-  const totalCartPrice = store.getState().totalCartPrice;
+  const isCartOpen = store.getState().isCartOpen;
+  const totalCartPrice = new Intl.NumberFormat('ru-RU', {
+    style: 'decimal',
+    currency: 'RUB',
+  }).format(store.getState().totalCartPrice);
 
   const callbacks = {
     onDeleteItemCart: useCallback(
@@ -22,33 +27,35 @@ function App({ store }) {
       },
       [store],
     ),
-    // onSelectItem: useCallback(
-    //   code => {
-    //     store.selectItem(code);
-    //   },
-    //   [store],
-    // ),
     onAddItemCart: useCallback(
       item => {
         store.addItemCart(item);
       },
       [store],
     ),
+    onToggleCart: useCallback(() => {
+      store.toggleCart();
+    }, [store]),
   };
 
   return (
     <PageLayout>
       <Head title="Магазин" />
       <Cart
-        onDeleteItemCart={callbacks.onDeleteItemCart}
         totalCartItemsCount={totalCartItemsCount}
         totalCartPrice={totalCartPrice}
-        cart={cart}
+        onToggleCart={callbacks.onToggleCart}
+        countInCart={countInCart}
       />
-      <List
+      <Modal
+        onDeleteItemCart={callbacks.onDeleteItemCart}
+        onToggleCart={callbacks.onToggleCart}
+        totalCartPrice={totalCartPrice}
+        isCartOpen={isCartOpen}
         list={list}
-        onAddItemCart={callbacks.onAddItemCart}
+        countInCart={countInCart}
       />
+      <List list={list} onAddItemCart={callbacks.onAddItemCart} />
     </PageLayout>
   );
 }

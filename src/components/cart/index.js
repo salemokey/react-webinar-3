@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import './style.css';
-import Modal from '../modal';
-import { plural } from '../../utils';
+import { formatPrice, plural } from '../../utils';
 import PropTypes from 'prop-types';
 
-function Cart({ cart, totalCartItemsCount, totalCartPrice, onDeleteItemCart }) {
-  const [openCart, setOpenCart] = useState(false);
+function Cart({ totalCartPrice, onToggleCart = () => {}, countInCart }) {
   const variants = {
     one: 'товар',
     few: 'товара',
@@ -18,38 +16,24 @@ function Cart({ cart, totalCartItemsCount, totalCartPrice, onDeleteItemCart }) {
         <div className="Status-cart__status">
           В корзине:{' '}
           <span className="b">
-            {cart.length > 0
-              ? `${cart.length} ${plural(cart.length, variants)} / ${totalCartPrice} ₽`
+            {countInCart > 0
+              ? `${countInCart} ${plural(countInCart, variants)} / ${totalCartPrice} ₽`
               : 'Пусто'}
           </span>
         </div>
         <div className="Status-cart__button">
-          <button className="openCart-btn" onClick={() => setOpenCart(!openCart)}>
+          <button className="openCart-btn" onClick={() => onToggleCart()}>
             Перейти
           </button>
         </div>
       </div>
-      {openCart && (
-        <Modal
-          cart={cart}
-          onDeleteItemCart={onDeleteItemCart}
-          openCart={openCart}
-          setOpenCart={setOpenCart}
-          totalCartPrice={totalCartPrice}
-        />
-      )}
     </div>
   );
 }
 
 Cart.propTypes = {
-  totalCartItemsCount: PropTypes.number,
-  totalCartPrice: PropTypes.number,
-  onDeleteItemCart: PropTypes.func,
+  totalCartPrice: PropTypes.string,
+  onToggleCart: PropTypes.func,
 };
-
-// Controls.defaultProps = {
-//   onAdd: () => {},
-// };
 
 export default React.memo(Cart);

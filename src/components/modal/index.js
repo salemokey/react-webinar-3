@@ -4,45 +4,52 @@ import './style.css';
 import Head from '../head';
 import PropTypes from 'prop-types';
 function Modal({
-  cart,
+  list,
   totalCartPrice,
   onDeleteItemCart = () => {},
-  openCart,
-  setOpenCart = () => {},
+  onToggleCart = () => {},
+  isCartOpen,
+  countInCart,
 }) {
-  debugger;
-  return (
-    <div className="Modal">
-      <div className="Modal__content">
-        <div className="Header-container">
-          <Head title="Корзина">
-            <div className="Header-container__button">
-              <button className="close-btn" onClick={() => setOpenCart(!openCart)}>
-                Закрыть
-              </button>
-            </div>
-          </Head>
-        </div>
-        {cart.map(item => (
-          <div key={item.code} className="Modal-content__list-item">
-            <Item item={item} isInCart={cart.includes(item)} onDeleteItemCart={onDeleteItemCart} />
+  if (isCartOpen === true) {
+    return (
+      <div className="Modal">
+        <div className="Modal__content">
+          <div className="Header-container">
+            <Head title="Корзина">
+              <div className="Header-container__button">
+                <button className="close-btn" onClick={() => onToggleCart()}>
+                  Закрыть
+                </button>
+              </div>
+            </Head>
           </div>
-        ))}
-        <div className="Footer">
-          {cart.length > 0 && (
-            <div className="Footer-content">
-              <span className="Footer-content__text">Итого:</span> 
-              <span className="Footer-content__number"> {totalCartPrice} &#8381;</span>
-            </div>
+          {list.map(
+            item =>
+              item.isInCart && (
+                <div key={item.code} className="Modal-content__list-item">
+                  <Item item={item} isInCart={item.isInCart} onDeleteItemCart={onDeleteItemCart}>
+                    <div className="Item-count">{item.count}шт</div>
+                  </Item>
+                </div>
+              ),
           )}
+          <div className="Footer">
+            {countInCart > 0 && (
+              <div className="Footer-content">
+                <span className="Footer-content__text">Итого:</span>
+                <span className="Footer-content__number"> {totalCartPrice} &#8381;</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 Modal.propTypes = {
-  cart: PropTypes.arrayOf(
+  list: PropTypes.arrayOf(
     PropTypes.shape({
       code: PropTypes.number,
       title: PropTypes.string,
@@ -51,10 +58,11 @@ Modal.propTypes = {
       isInCart: PropTypes.bool,
     }),
   ),
-  totalCartPrice: PropTypes.number,
+  totalCartPrice: PropTypes.string,
   onDeleteItemCart: PropTypes.func,
-  openCart: PropTypes.bool,
-  setOpenCart: PropTypes.func,
+  isCartOpen: PropTypes.bool,
+  onToggleCart: PropTypes.func,
+  countInCart: PropTypes.number,
 };
 
-export default Modal;
+export default React.memo(Modal);

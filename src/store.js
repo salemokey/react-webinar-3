@@ -1,5 +1,3 @@
-import { generateCode } from './utils';
-
 /**
  * Хранилище состояния приложения
  */
@@ -9,6 +7,7 @@ class Store {
     this.listeners = []; // Слушатели изменений состояния
     this.totalCartItemsCount = 0;
     this.totalCartPrice = 0;
+    this.isCartOpen = false;
   }
 
   /**
@@ -48,30 +47,35 @@ class Store {
    */
 
   addItemCart(item) {
-    const itemExist = this.state.cart.some(cartItem => cartItem.code === item.code);
-    this.totalCartItemsCount += 1;
+    const existingItem = this.state.list.find(listItem => listItem.code === item.code);
     this.totalCartPrice += item.price;
-    if (!itemExist)
-      this.setState({
-        ...this.state,
-        cart: [...this.state.cart, { ...item, count: 1 }],
-        totalCartItemsCount: this.totalCartItemsCount,
-        totalCartPrice: this.totalCartPrice,
-      });
-    else
-      this.setState({
-        ...this.state,
-        cart: [
-          ...this.state.cart.map(itemCart =>
-            itemCart.code === item.code
-              ? { ...itemCart, price: itemCart.price + item.price, count: itemCart.count + 1 }
-              : itemCart,
-          ),
-        ],
-        totalCartItemsCount: this.totalCartItemsCount,
-        totalCartPrice: this.totalCartPrice,
-      });
-    console.log(this.state.cart);
+    this.totalCartItemsCount += 1;
+    if (existingItem) {
+      if (!existingItem.isInCart) {
+        this.setState({
+          ...this.state,
+          list: [
+            ...this.state.list.map(listItem =>
+              listItem.code === item.code ? { ...listItem, count: 1, isInCart: true } : listItem,
+            ),
+          ],
+          totalCartItemsCount: this.totalCartItemsCount,
+          totalCartPrice: this.totalCartPrice,
+        });
+      } else if (existingItem.isInCart) {
+        existingItem.count += 1;
+        this.setState({
+          ...this.state,
+          list: [
+            ...this.state.list.map(listItem =>
+              listItem.code === item.code ? { ...listItem, count: existingItem.count } : listItem,
+            ),
+          ],
+          totalCartPrice: this.totalCartPrice,
+          totalCartItemsCount: this.totalCartItemsCount,
+        });
+      }
+    }
   }
 
   /**
@@ -79,17 +83,28 @@ class Store {
    * @param code
    */
   deleteItemCart(item) {
-    this.totalCartPrice -= item.price;
+    const existingItem = this.state.list.find(listItem => listItem.code === item.code);
+    this.totalCartPrice -= (item.price * item.count);
     this.totalCartItemsCount -= item.count;
-    this.setState({
-      ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      cart: this.state.cart.filter(elem => elem.code !== item.code),
-      totalCartPrice: this.totalCartPrice,
-      totalCartItemsCount: this.totalCartItemsCount,
-    });
+    if (existingItem) {
+      this.setState({
+        ...this.state,
+        // Новый список, в котором не будет удаляемой записи
+        list: [
+          ...this.state.list.map(listItem =>
+            listItem.code === item.code ? { ...listItem, isInCart: false } : listItem,
+          ),
+        ],
+        totalCartPrice: this.totalCartPrice,
+        totalCartItemsCount: this.totalCartItemsCount,
+      });
+    }
   }
 
+  toggleCart() {
+    this.isCartOpen = !this.isCartOpen;
+    this.setState({ ...this.state, isCartOpen: this.isCartOpen });
+  }
   /**
    * Выделение записи по коду
    * @param code

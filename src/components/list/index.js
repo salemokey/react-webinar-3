@@ -21,7 +21,6 @@ List.propTypes = {
       code: PropTypes.number,
     }),
   ).isRequired,
-  onDeleteItem: PropTypes.func,
   onAddItemCart: PropTypes.func,
 };
 

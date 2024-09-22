@@ -51,3 +51,10 @@ export function generateCode2() {
   return generateCode2.value ? ++generateCode2.value : (generateCode2.value = 1);
 }
 ////
+
+export function formatPrice(price) {
+  new Intl.NumberFormat('ru-RU', {
+    style: 'decimal',
+    currency: 'RUB',
+  }).format(price);
+}
