@@ -65,4 +65,4 @@ Modal.propTypes = {
   countInCart: PropTypes.number,
 };
 
-export default React.memo(Modal);
+export default Modal;
