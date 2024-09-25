@@ -11,6 +11,7 @@ function Main() {
   const store = useStore();
 
   useEffect(() => {
+    store.actions.catalog.pagesCount();
     store.actions.catalog.load();
   }, []);
 
@@ -18,6 +19,7 @@ function Main() {
     list: state.catalog.list,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    pages: state.catalog.pages,
   }));
 
   const callbacks = {
@@ -40,7 +42,7 @@ function Main() {
     <PageLayout>
       <Head title="Магазин" />
       <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} />
-      <List list={select.list} renderItem={renders.item} />
+      <List list={select.list} renderItem={renders.item} pages={select.pages} />
     </PageLayout>
   );
 }

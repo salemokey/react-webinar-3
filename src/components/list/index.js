@@ -2,8 +2,9 @@ import { memo } from 'react';
 import PropTypes from 'prop-types';
 import Item from '../item';
 import './style.css';
+import Pagination from '../list-tool';
 
-function List({ list, renderItem }) {
+function List({ list, renderItem, pages }) {
   return (
     <div className="List">
       {list.map(item => (
@@ -11,6 +12,7 @@ function List({ list, renderItem }) {
           {renderItem(item)}
         </div>
       ))}
+      <Pagination pages={pages} />
     </div>
   );
 }
