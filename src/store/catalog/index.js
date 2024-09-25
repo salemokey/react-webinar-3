@@ -7,6 +7,8 @@ class Catalog extends StoreModule {
     this.generateCode = codeGenerator(0);
     this.currentPage = 0;
     this.itemsPerPage = 10;
+    this.pages = [];
+    this.totalItems = 0;
   }
 
   initState() {
@@ -16,21 +18,27 @@ class Catalog extends StoreModule {
     };
   }
   pagesCount() {
-    this.currentPage = 0;
-    let pages = [];
-    let lastIndexPage = this.currentPage + 50;
+    let lastIndexPage = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.pages = [];
     for (let i = 1; i <= lastIndexPage; i++) {
-      pages.push(i);
+      this.pages.push(i);
     }
-    this.setState({ ...this.getState(), pages: pages });
-    console.log(this.pages);
+    this.setState({ ...this.getState(), pages: this.pages });
+  }
+
+  onChangePage(page) {
+    this.currentPage = page === 1 ? 0 : page - 1;
+    this.load();
+    console.log(this.currentPage);
   }
 
   async load() {
+    const skip = this.currentPage * this.itemsPerPage;
     const response = await fetch(
-      `api/v1/articles?limit=${this.itemsPerPage}&skip=${this.currentPage}`,
+      `api/v1/articles?limit=${this.itemsPerPage}&skip=${skip}&fields=items(_id,%20title,%20price),count`,
     );
     const json = await response.json();
+    this.totalItems = json.result.count;
     this.setState(
       {
         ...this.getState(),
@@ -38,6 +46,7 @@ class Catalog extends StoreModule {
       },
       'Загружены товары из АПИ',
     );
+    this.pagesCount();
   }
 }
 

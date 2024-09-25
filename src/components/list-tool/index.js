@@ -1,10 +1,12 @@
 import React from 'react';
 
-const Pagination = ({ pages }) => {
+const Pagination = ({ pages, onChangePage }) => {
   return (
     <div>
       {pages.map(p => (
-          <button key={p}>{p}</button>
+        <button onClick={() => onChangePage(p)} key={p}>
+          {p}
+        </button>
       ))}
     </div>
   );

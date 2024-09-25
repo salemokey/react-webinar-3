@@ -4,7 +4,7 @@ import Item from '../item';
 import './style.css';
 import Pagination from '../list-tool';
 
-function List({ list, renderItem, pages }) {
+function List({ list, renderItem, renderPages }) {
   return (
     <div className="List">
       {list.map(item => (
@@ -12,7 +12,6 @@ function List({ list, renderItem, pages }) {
           {renderItem(item)}
         </div>
       ))}
-      <Pagination pages={pages} />
     </div>
   );
 }
