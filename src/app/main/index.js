@@ -30,12 +30,14 @@ function Main() {
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     //пагинация
     changePage: useCallback(page => store.actions.catalog.onChangePage(page), [store]),
+    //получение _id выбранного товара
+    selectItem: useCallback(code => store.actions.itemPage.onSelectItem(code), [store]),
   };
 
   const renders = {
     item: useCallback(
       item => {
-        return <Item item={item} onAdd={callbacks.addToBasket} />;
+        return <Item item={item} onAdd={callbacks.addToBasket} selectItem={callbacks.selectItem} />;
       },
       [callbacks.addToBasket],
     ),

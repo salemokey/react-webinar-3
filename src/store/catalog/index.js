@@ -17,6 +17,7 @@ class Catalog extends StoreModule {
       pages: [],
     };
   }
+
   pagesCount() {
     let lastIndexPage = Math.ceil(this.totalItems / this.itemsPerPage);
     this.pages = [];

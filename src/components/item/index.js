@@ -9,10 +9,11 @@ function Item(props) {
 
   const callbacks = {
     onAdd: e => props.onAdd(props.item._id),
+    selectItems: e => props.selectItem(props.item._id),
   };
-
+  debugger;
   return (
-    <div className={cn()}>
+    <div className={cn()} onClick={callbacks.selectItems}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
       <div className={cn('title')}>{props.item.title}</div>
       <div className={cn('actions')}>
