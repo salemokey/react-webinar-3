@@ -14,7 +14,7 @@ class Card extends StoreModule {
   async load(id) {
     try {
       const response = await fetch(
-        `/api/v1/articles/${id}?fields=title,description,price,madeIn(title,code),category(title)`,
+        `/api/v1/articles/${id}?fields=title,description,price,madeIn(title,code),category(title),edition`,
       );
       const json = await response.json();
 
@@ -27,6 +27,7 @@ class Card extends StoreModule {
             price: json.result.price,
             madeIn: json.result.madeIn.title,
             category: json.result.category.title,
+            edition: json.result.edition,
           },
         },
         `Загружен товар ${id}`,

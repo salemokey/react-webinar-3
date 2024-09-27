@@ -6,6 +6,8 @@ import PageLayout from '../page-layout';
 import { Link, useParams } from 'react-router-dom';
 import { cn as bem } from '@bem-react/classname';
 import BasketTool from '../basket-tool';
+import './style.css';
+import { numberFormat } from '../../utils';
 
 const Card = () => {
   const { id } = useParams();
@@ -14,6 +16,7 @@ const Card = () => {
 
   useEffect(() => {
     store.actions.card.load(id);
+    store.actions.modals.close();
   }, [id]);
 
   const select = useSelector(state => ({
@@ -44,13 +47,29 @@ const Card = () => {
               sum={select.sum}
             />
           </div>
+          <div className={cn('container-description')}>
+            <div className={cn('description')}>{select.item.description}</div>
+            <div className={cn('country')}>
+              {`Страна производитель: `}
+              <span className="Card-bold_text">{select.item.madeIn}</span>
+            </div>
+            <div className={cn('category')}>
+              {`Категория: `}
+              <span className="Card-bold_text">{select.item.category}</span>
+            </div>
+            <div className={cn('edition')}>
+              {`Год выпуска: `}
+              <span className="Card-bold_text">{select.item.edition}</span>
+            </div>
+            <div className={cn('price')}>
+              <span className="Card-bold_text">
+                {`Цена: `}
+                {numberFormat(select.item.price)} ₽
+              </span>
+            </div>
 
-          <div className={cn('description')}>
-            <p>{select.item.description}</p>
+            <button onClick={callbacks.addToBasket}>Добавить</button>
           </div>
-          <div className={cn('country')}>{select.item.madeIn}</div>
-          <div className={cn('price')}>{select.item.price}</div>
-          <button onClick={callbacks.addToBasket}>Добавить</button>
         </div>
       </PageLayout>
     </>
