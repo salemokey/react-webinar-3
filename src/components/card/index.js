@@ -3,16 +3,21 @@ import Head from '../head';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import PageLayout from '../page-layout';
+import { useParams } from 'react-router-dom';
+import { cn as bem } from '@bem-react/classname';
 
-const ItemPageLayout = () => {
+const Card = () => {
+  const { id } = useParams();
   const store = useStore();
 
-
+  useEffect(() => {
+    store.actions.card.load(id);
+  }, [id]);
 
   const select = useSelector(state => ({
-    item: state.itemPage.item,
+    item: state.card.item,
   }));
-
+  console.log(id);
   const callbacks = {
     // Удаление из корзины
     removeFromBasket: useCallback(_id => store.actions.basket.removeFromBasket(_id), [store]),
@@ -23,14 +28,13 @@ const ItemPageLayout = () => {
     <>
       <PageLayout>
         <Head title={select.item.title} />
-        <div className='Description'>
+        <div className="Description">
           <p>{select.item.description}</p>
           <p>Цена: {select.item.price} руб.</p>
-          <button onClick={callbacks.removeFromBasket}>Удалить из корзины</button>
         </div>
       </PageLayout>
     </>
   );
 };
 
-export default ItemPageLayout;
+export default memo(Card);

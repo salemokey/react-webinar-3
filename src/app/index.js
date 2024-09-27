@@ -4,7 +4,7 @@ import Basket from './basket';
 import useStore from '../store/use-store';
 import useSelector from '../store/use-selector';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ItemPageLayout from '../components/item-page';
+import Card from '../components/card';
 
 /**
  * Приложение
@@ -17,7 +17,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/itemPage" element={<ItemPageLayout />} />
+        <Route path="/card/:id" element={<Card />} />
       </Routes>
       {activeModal === 'basket' && <Basket />}
     </>

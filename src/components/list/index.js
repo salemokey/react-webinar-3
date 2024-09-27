@@ -1,8 +1,6 @@
 import { memo } from 'react';
 import PropTypes from 'prop-types';
-import Item from '../item';
 import './style.css';
-import Pagination from '../list-tool';
 
 function List({ list, renderItem, renderPages }) {
   return (

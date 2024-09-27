@@ -8,6 +8,7 @@ import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import Pagination from '../../components/list-tool';
 
+
 function Main() {
   const store = useStore();
 
@@ -30,14 +31,12 @@ function Main() {
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     //пагинация
     changePage: useCallback(page => store.actions.catalog.onChangePage(page), [store]),
-    //получение _id выбранного товара
-    selectItem: useCallback(code => store.actions.itemPage.onSelectItem(code), [store]),
   };
 
   const renders = {
     item: useCallback(
       item => {
-        return <Item item={item} onAdd={callbacks.addToBasket} selectItem={callbacks.selectItem} />;
+        return <Item item={item} onAdd={callbacks.addToBasket} />;
       },
       [callbacks.addToBasket],
     ),
