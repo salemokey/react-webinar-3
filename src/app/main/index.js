@@ -29,7 +29,7 @@ function Main() {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
-    //пагинация
+    //Пагинация
     changePage: useCallback(page => store.actions.catalog.onChangePage(page), [store]),
   };
 

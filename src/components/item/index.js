@@ -13,16 +13,20 @@ function Item(props) {
   };
 
   return (
-    <Link to={`/card/${props.item._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-      <div className={cn()}>
-        {/*<div className={cn('code')}>{props.item._id}</div>*/}
-        <div className={cn('title')}>{props.item.title}</div>
-        <div className={cn('actions')}>
-          <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
-          <button onClick={callbacks.onAdd}>Добавить</button>
-        </div>
+    <div className={cn()}>
+      {/*<div className={cn('code')}>{props.item._id}</div>*/}
+      <div className={cn('title')}>
+        <Link to={`/card/${props.item._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          {props.item.title}
+        </Link>
       </div>
-    </Link>
+
+      <div className={cn('actions')}>
+        <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
+
+        <button onClick={callbacks.onAdd}>Добавить</button>
+      </div>
+    </div>
   );
 }
 

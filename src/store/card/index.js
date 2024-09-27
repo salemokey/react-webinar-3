@@ -13,12 +13,21 @@ class Card extends StoreModule {
 
   async load(id) {
     try {
-      const response = await fetch(`/api/v1/articles/${id}`);
+      const response = await fetch(
+        `/api/v1/articles/${id}?fields=title,description,price,madeIn(title,code),category(title)`,
+      );
       const json = await response.json();
 
       this.setState(
         {
-          item: json.result,
+          ...this.getState(),
+          item: {
+            title: json.result.title,
+            description: json.result.description,
+            price: json.result.price,
+            madeIn: json.result.madeIn.title,
+            category: json.result.category.title,
+          },
         },
         `Загружен товар ${id}`,
       );
