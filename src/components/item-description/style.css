@@ -1,0 +1,23 @@
+.ItemPage {
+  padding: 40px;
+}
+
+.ItemPage-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.Cart-controls a {
+  color: #0087e9;
+  text-decoration: none;
+  justify-self: left;
+}
+.ItemPage-controls a:visited {
+  color: #0087e9;
+}
+.ItemPage-bold_text {
+  font-weight: bold;
+}
+.ItemPage-container-description div {
+  padding-bottom: 20px;
+}

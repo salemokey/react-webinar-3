@@ -7,10 +7,12 @@ import List from '../../components/list';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import Pagination from '../../components/list-tool';
+import { Link } from 'react-router-dom';
 
 
 function Main() {
   const store = useStore();
+
 
   useEffect(() => {
     store.actions.catalog.load();

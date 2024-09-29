@@ -1,0 +1,8 @@
+
+.Item-control a {
+    color: #0087E9;
+    text-decoration: none;
+}
+.Item-control a:visited {
+    color: #0087E9;
+}

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 function Item(props) {
   const cn = bem('Item');
+  const cardLink = `/card/${props.item._id}`;
 
   const callbacks = {
     onAdd: e => props.onAdd(props.item._id),
@@ -16,9 +17,11 @@ function Item(props) {
     <div className={cn()}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
       <div className={cn('title')}>
-        <Link to={`/card/${props.item._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-          {props.item.title}
-        </Link>
+        {cardLink && (
+          <Link to={cardLink} style={{ textDecoration: 'none', color: 'inherit' }}>
+            {props.item.title}
+          </Link>
+        )}
       </div>
 
       <div className={cn('actions')}>

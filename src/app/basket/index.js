@@ -13,6 +13,7 @@ function Basket() {
     list: state.basket.list,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    
   }));
 
   const callbacks = {
