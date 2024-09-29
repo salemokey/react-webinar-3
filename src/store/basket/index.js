@@ -15,12 +15,13 @@ class Basket extends StoreModule {
    */
   addToBasket(_id) {
     let sum = 0;
-    // Ищем товар в корзине, чтобы увеличить его количество
     let exist = false;
+
+    // Обновляем список и считаем сумму
     const list = this.getState().list.map(item => {
       let result = item;
       if (item._id === _id) {
-        exist = true; // Запомним, что был найден в корзине
+        exist = true; // Запомним, что товар найден в корзине
         result = { ...item, amount: item.amount + 1 };
       }
       sum += result.price * result.amount;
@@ -28,23 +29,43 @@ class Basket extends StoreModule {
     });
 
     if (!exist) {
-      // Поиск товара в каталоге, чтобы его добавить в корзину.
-      // @todo В реальном приложении будет запрос к АПИ вместо поиска по состоянию.
+      // Находим товар в каталоге
       const item = this.store.getState().catalog.list.find(item => item._id === _id);
-      list.push({ ...item, amount: 1 }); // list уже новый, в него можно пушить.
-      // Добавляем к сумме.
-      sum += item.price;
-    }
 
-    this.setState(
-      {
+      if (!item) {
+        // Если товар не найден, загружаем его через API
+        this.store.actions.card.load(_id).then(apiItem => {
+          if (apiItem) {
+            const newList = [...list, { ...apiItem, amount: 1 }];
+            const newSum = sum + apiItem.price;
+            this.setState({
+              ...this.getState(),
+              list: newList,
+              sum: newSum,
+              amount: newList.length,
+            });
+          }
+        });
+      } else {
+        // Если товар найден в каталоге
+        const newList = [...list, { ...item, amount: 1 }];
+        const newSum = sum + item.price;
+        this.setState({
+          ...this.getState(),
+          list: newList,
+          sum: newSum,
+          amount: newList.length,
+        });
+      }
+    } else {
+      // Если товар уже есть в корзине
+      this.setState({
         ...this.getState(),
         list,
         sum,
         amount: list.length,
-      },
-      'Добавление в корзину',
-    );
+      });
+    }
   }
 
   /**
@@ -53,9 +74,11 @@ class Basket extends StoreModule {
    */
   removeFromBasket(_id) {
     let sum = 0;
+
+    // Фильтруем список и считаем сумму
     const list = this.getState().list.filter(item => {
-      if (item._id === _id) return false;
-      sum += item.price * item.amount;
+      if (item._id === _id) return false; // Удаляем товар из списка
+      sum += item.price * item.amount; // Считаем сумму оставшихся товаров
       return true;
     });
 
