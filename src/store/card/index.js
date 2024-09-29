@@ -14,7 +14,7 @@ class Card extends StoreModule {
   async load(id) {
     try {
       const response = await fetch(
-        `/api/v1/articles/${id}?fields=_id,title,description,price,madeIn(title,code),category(title),edition`,
+        `/api/v1/articles/${id}?fields=*,_id,title,description,price,madeIn(title,code),category(title),edition`,
       );
       const json = await response.json();
 
@@ -33,6 +33,7 @@ class Card extends StoreModule {
         },
         `Загружен товар ${id}`,
       );
+      return json.result;
     } catch (error) {
       console.error(`Ошибка при загрузке товара ${id}:`, error);
     }

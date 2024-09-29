@@ -30,7 +30,7 @@ class Basket extends StoreModule {
 
     if (!exist) {
       // Находим товар в каталоге
-      const item = this.store.getState().catalog.list.find(item => item._id === _id);
+      let item = this.store.getState().catalog.list.find(item => item._id === _id);
 
       if (!item) {
         // Если товар не найден, загружаем его через API

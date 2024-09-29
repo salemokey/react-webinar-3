@@ -15,7 +15,6 @@ const Card = () => {
   const cn = bem('Card');
 
   useEffect(() => {
-    store.actions.catalog.load();
     store.actions.card.load(id);
     store.actions.modals.close();
   }, [id]);
