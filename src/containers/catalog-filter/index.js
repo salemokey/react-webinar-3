@@ -21,6 +21,7 @@ function CatalogFilter() {
   }));
 
   const allCategories = sortCategories(select.allCategories);
+  
   const callbacks = {
     // Сортировка
     onSort: useCallback(sort => store.actions.catalog.setParams({ sort }), [store]),
@@ -28,7 +29,7 @@ function CatalogFilter() {
     onSearch: useCallback(query => store.actions.catalog.setParams({ query, page: 1 }), [store]),
     // Сброс
     onReset: useCallback(() => store.actions.catalog.resetParams(), [store]),
-
+    // Фильтрация
     onFilter: useCallback(
       category => store.actions.catalog.setParams({ category, page: 1 }),
       [store],
