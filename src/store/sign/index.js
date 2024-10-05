@@ -10,47 +10,26 @@ class SignState extends StoreModule {
    */
   initState() {
     return {
-      login: '',
-      password: '',
+      isLoged: false,
+      userData: {},
+      token: '',
     };
   }
 
-  handleLoginChange(event) {
-    const { value } = event.target;
-    this.setState({ ...this.getState(), login: value });
-  }
-
-  handlePasswordChange(event) {
-    const { value } = event.target;
-    this.setState({ ...this.getState(), password: value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault(); // Предотвращаем стандартную отправку формы
-    const { login, password } = this.getState(); // Получаем текущие значения состояния
-    this.login(login, password); // Обновляем состояние с логином и паролем
-    this.signIn(); // Вызываем метод signIn
-  }
-
-  async signIn() {
+  async signIn({ login, password }) {
     try {
-      const response = await fetch('/api/v1/auth/login', {
+      const response = await fetch('/api/v1/users/sign', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          login: this.state.login,
-          password: this.state.password,
-        }),
+        body: JSON.stringify({ login, password }),
       });
       if (response.ok) {
-        // Запоминаем токен в localStorage
         const token = await response.json().token;
-        localStorage.setItem('token', token);
-        // Переходим на главную страницу
-        window.location.href = '/';
+        localStorage.setItem('X-token', token);
         ('Авторизация успешна');
+        this.setState({ ...this.getState(), isLoged: true, userData: json.result });
       } else {
         throw new Error('Ошибка авторизации');
       }

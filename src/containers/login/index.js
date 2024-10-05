@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
 import LoginForm from '../../components/login-form';
@@ -6,27 +6,36 @@ import LoginForm from '../../components/login-form';
 /**
  * Контейнер со всеми фильтрами каталога
  */
-function Login() {
+function Login({ signIn }) {
   const store = useStore();
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
 
-  const select = useSelector(state => ({
-    login: state.sign.login,
-    password: state.sign.password,
-  }));
-
-  const callbacks = {
-    onLoginChange: useCallback(event => store.actions.handleLoginChange(event), [store]),
-    onPasswordChange: useCallback(event => store.actions.handlePasswordChange(event), [store]),
-    onLogin: useCallback(event => store.actions.handleSubmit(event), [store]),
+  const handleOnChangeLogin = e => {
+    e.preventDefault();
+    setLogin(e.target.value);
   };
+
+  const handleOnChangePassword = e => {
+    e.preventDefault();
+    setPassword(e.target.value);
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    const credentials = { login, password };
+    signIn(credentials);
+  };
+
+  debugger;
 
   return (
     <LoginForm
-      login={select.login}
-      password={select.password}
-      onLoginChange={callbacks.onLoginChange}
-      onPasswordChange={callbacks.onPasswordChange}
-      onLogin={callbacks.onLogin}
+      login={login}
+      password={password}
+      onLoginChange={handleOnChangeLogin}
+      onPasswordChange={handleOnChangePassword}
+      onLogin={onSubmit}
     />
   );
 }

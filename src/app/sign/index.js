@@ -8,19 +8,14 @@ import Login from '../../containers/login';
 function Sign() {
   const store = useStore();
 
-  const select = useSelector(state => ({
-    login: state.sign.login,
-    password: state.sign.password,
-  }));
-
   const callbacks = {
     // Добавление в корзину
-    addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
+    signIn: useCallback(value => store.actions.sign.signIn(value), [store]),
   };
-
+  debugger;
   return (
     <PageLayout>
-      <Login />
+      <Login signIn={callbacks.signIn} />
     </PageLayout>
   );
 }
