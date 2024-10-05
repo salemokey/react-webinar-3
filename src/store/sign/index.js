@@ -17,6 +17,7 @@ class SignState extends StoreModule {
   }
 
   async signIn({ login, password }) {
+    console.log({ login, password });
     try {
       const response = await fetch('/api/v1/users/sign', {
         method: 'POST',

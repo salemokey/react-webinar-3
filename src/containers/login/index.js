@@ -6,25 +6,17 @@ import LoginForm from '../../components/login-form';
 /**
  * Контейнер со всеми фильтрами каталога
  */
-function Login({ signIn }) {
+function Login() {
   const store = useStore();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleOnChangeLogin = e => {
-    e.preventDefault();
-    setLogin(e.target.value);
-  };
-
-  const handleOnChangePassword = e => {
-    e.preventDefault();
-    setPassword(e.target.value);
-  };
-
-  const onSubmit = e => {
-    e.preventDefault();
-    const credentials = { login, password };
-    signIn(credentials);
+  const callbacks = {
+    handleOnChangeLogin: useCallback(loginValue => setLogin(loginValue), [login]),
+    handleOnChangePassword: useCallback(passwordValue => setPassword(passwordValue), [password]),
+    handleOnSubmit: useCallback(() => {
+      store.actions.sign.signIn({ login, password });
+    }, [login, password, store.actions.sign.login]),
   };
 
   debugger;
@@ -33,9 +25,9 @@ function Login({ signIn }) {
     <LoginForm
       login={login}
       password={password}
-      onLoginChange={handleOnChangeLogin}
-      onPasswordChange={handleOnChangePassword}
-      onLogin={onSubmit}
+      onLoginChange={callbacks.handleOnChangeLogin}
+      onPasswordChange={callbacks.handleOnChangePassword}
+      onSubmit={callbacks.handleOnSubmit}
     />
   );
 }

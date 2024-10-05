@@ -6,16 +6,10 @@ import PageLayout from '../../components/page-layout';
 import Login from '../../containers/login';
 
 function Sign() {
-  const store = useStore();
-
-  const callbacks = {
-    // Добавление в корзину
-    signIn: useCallback(value => store.actions.sign.signIn(value), [store]),
-  };
   debugger;
   return (
     <PageLayout>
-      <Login signIn={callbacks.signIn} />
+      <Login />
     </PageLayout>
   );
 }
