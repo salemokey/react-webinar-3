@@ -1,7 +1,6 @@
 import { memo, useCallback, useLayoutEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
-import debounce from 'lodash.debounce';
+import './style.css';
 
 function LoginForm(props) {
   const onSubmit = e => {
@@ -19,10 +18,27 @@ function LoginForm(props) {
 
   const cn = bem('Login-form');
   return (
-    <form action="" onSubmit={onSubmit}>
-      <input placeholder="Логин" onChange={onLoginChange} value={props.login} type="text" />
-      <input placeholder="Пароль" onChange={onPasswordChange} value={props.password} type="text" />
-      <button type="submit">Войти</button>
+    <form action="" onSubmit={onSubmit} className={cn()}>
+      <h2>Вход</h2>
+      <label for={cn('login')}>Логин</label>
+      <input
+        placeholder="Логин"
+        onChange={onLoginChange}
+        value={props.login}
+        type="text"
+        className={cn('login')}
+      />
+      <label for={cn('login')}>Пароль</label>
+      <input
+        placeholder="Пароль"
+        onChange={onPasswordChange}
+        value={props.password}
+        type="text"
+        className={cn('password')}
+      />
+      <button type="submit" className={cn('btn')}>
+        Войти
+      </button>
     </form>
   );
 }
