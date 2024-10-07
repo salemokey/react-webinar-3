@@ -10,18 +10,21 @@ function ProfileLink() {
   const navigate = useNavigate();
 
   const select = useSelector(state => ({
+    isLogged: state.sign.isLogged,
     token: state.sign.token,
-    userData: state.sign.userData,
+    name: state.sign.name,
   }));
 
   const callbacks = {
     onExit: useCallback(() => store.actions.sign.exitUser()),
   };
 
-  return select.token ? (
+  return select.isLogged ? (
     <SideLayout side="end">
-      <Link to={`/profile`}>{select.userData.name}</Link>
+      <Link className='login-link' to={`/profile`}>{select.name}</Link>
+      <div className="enter-btn">
       <button onClick={callbacks.onExit}>Выход</button>
+      </div>
     </SideLayout>
   ) : (
     <SideLayout side="end">

@@ -10,13 +10,12 @@ class SignState extends StoreModule {
    */
   initState() {
     return {
-      isLoged: false,
-      userData: {
-        name: null,
-        phone: null,
-        email: null,
-      },
+      isLogged: false,
+      name: null,
+      phone: null,
+      email: null,
       token: null,
+      errorServer: null,
     };
   }
 
@@ -39,16 +38,15 @@ class SignState extends StoreModule {
           {
             ...this.getState(),
             token: token,
-            isLoged: true,
-            userData: {
-              name: json.result.user.profile.name,
-              phone: json.result.user.profile.phone,
-              email: json.result.user.email,
-            },
+            isLogged: true,
+            name: json.result.user.profile.name,
+            phone: json.result.user.profile.phone,
+            email: json.result.user.email,
           },
           console.log(localStorage.getItem('token')),
         );
       } else {
+        this.setState({ errorServer: 'error' });
         throw new Error('Ошибка авторизации');
       }
     } catch (error) {
@@ -59,12 +57,10 @@ class SignState extends StoreModule {
   async exitUser() {
     localStorage.removeItem('token');
     this.setState({
-      isLoged: false,
-      userData: {
-        name: '',
-        phone: '',
-        email: '',
-      },
+      isLogged: false,
+      name: '',
+      phone: '',
+      email: '',
     });
   }
 
@@ -88,11 +84,11 @@ class SignState extends StoreModule {
         const json = await response.json();
         console.log(json.result);
         this.setState({
-          userData: {
-            name: json.result.profile.name,
-            phone: json.result.profile.phone,
-            email: json.result.email,
-          },
+          ...this.getState(),
+          isLogged: true,
+          name: json.result.profile.name,
+          phone: json.result.profile.phone,
+          email: json.result.email,
         });
       }
     } catch (e) {

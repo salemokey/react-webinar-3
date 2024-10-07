@@ -19,7 +19,9 @@ function Profile() {
   }, [token, navigate]);
 
   const select = useSelector(state => ({
-    userData: state.sign.userData,
+    name: state.sign.name,
+    phone: state.sign.phone,
+    email: state.sign.email,
   }));
 
   console.log(select.userData);
@@ -28,7 +30,7 @@ function Profile() {
     <PageLayout>
       <Head title="Магазин" />
       <Navigation />
-      <ProfileDescription userData={select.userData} />
+      <ProfileDescription name={select.name} phone={select.phone} email={select.email} />
     </PageLayout>
   );
 }

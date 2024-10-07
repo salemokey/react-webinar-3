@@ -16,6 +16,10 @@ function Login() {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
+  const select = useSelector(state => ({
+    errorServer: state.sign.errorServer,
+  }));
+
   const callbacks = {
     handleOnChangeLogin: useCallback(loginValue => setLogin(loginValue), [login]),
     handleOnChangePassword: useCallback(passwordValue => setPassword(passwordValue), [password]),
@@ -39,6 +43,7 @@ function Login() {
         onLoginChange={callbacks.handleOnChangeLogin}
         onPasswordChange={callbacks.handleOnChangePassword}
         onSubmit={callbacks.handleOnSubmit}
+        errorServer={select.errorServer}
       />
     </PageLayout>
   );

@@ -8,9 +8,16 @@ function ProfileDescription(props) {
   const cn = bem('ProfileDescription');
   return (
     <div className={cn()}>
-      <div className={cn('name')}>{props.userData.name}</div>
-      <div className={cn('phone')}>{props.userData.phone}</div>
-      <div className={cn('email')}>{props.userData.email}</div>
+      <h2>Профиль</h2>
+      <div className={cn('name')}>
+        Имя: <b>{props.name}</b>
+      </div>
+      <div className={cn('phone')}>
+        Телефон: <b>{props.phone}</b>
+      </div>
+      <div className={cn('email')}>
+        email: <b>{props.email}</b>
+      </div>
     </div>
   );
 }
