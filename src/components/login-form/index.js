@@ -36,7 +36,6 @@ function LoginForm(props) {
         type="text"
         className={cn('password')}
       />
-
       <div className={cn('error')}>{props.errorServer ? props.errorServer : null}</div>
       <button type="submit" className={cn('btn')}>
         Войти
@@ -45,4 +44,4 @@ function LoginForm(props) {
   );
 }
 
-export default memo(LoginForm);
+export default LoginForm;

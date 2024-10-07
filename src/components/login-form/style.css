@@ -22,3 +22,9 @@
   margin-top: 20px;
   width: max-content;
 }
+
+.Login-form-error {
+  color: red;
+  font-size: 16px;
+  margin-top: 20px;
+}
