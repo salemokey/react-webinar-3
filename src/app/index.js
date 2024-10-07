@@ -17,13 +17,9 @@ function App() {
   const activeModal = useSelector(state => state.modals.name);
   const store = useStore();
 
-  useInit(
-    () => {
-      store.actions.sign.getUser();
-    },
-    [],
-    true,
-  );
+  useInit(() => {
+    store.actions.sign.getUser();
+  });
 
   return (
     <>

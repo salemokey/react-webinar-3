@@ -89,9 +89,9 @@ class SignState extends StoreModule {
         console.log(json.result);
         this.setState({
           userData: {
-            name: json.result.user.profile.name,
-            phone: json.result.user.profile.phone,
-            email: json.result.user.email,
+            name: json.result.profile.name,
+            phone: json.result.profile.phone,
+            email: json.result.email,
           },
         });
       }
