@@ -6,7 +6,7 @@ function Select(props) {
   const onSelect = e => {
     props.onChange(e.target.value);
   };
-debugger;
+  debugger;
   return (
     <select className="Select" value={props.value} onChange={onSelect}>
       {props.options.map(item => (

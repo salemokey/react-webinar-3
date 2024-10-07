@@ -63,8 +63,8 @@ function CatalogFilter() {
 
   return (
     <SideLayout padding="medium">
-      <Select options={options.sort} value={select.sort} onChange={callbacks.onSort} />
       <Select options={options.category} value={select.category} onChange={callbacks.onFilter} />
+      <Select options={options.sort} value={select.sort} onChange={callbacks.onSort} />
       <Input
         value={select.query}
         onChange={callbacks.onSearch}
