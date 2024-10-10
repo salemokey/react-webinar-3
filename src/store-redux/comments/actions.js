@@ -15,7 +15,7 @@ export default {
         console.log(res.data.result.items);
       } catch (e) {
         //Ошибка загрузки
-        console.log (e.message);
+        console.log(e.message);
       }
     };
   },
