@@ -8,26 +8,25 @@ import { cn as bem } from '@bem-react/classname';
 
 const Comments = props => {
   const cn = bem('comments');
-  // const [rootComments, root] = useState([]);
+  const backendComments = props.comments.filter(comment => comment.parent._type === 'comment');
+  const rootComments = props.comments.filter(comment => comment.parent._type === 'article');
+  console.log('rootComments', rootComments, 'backendComments', backendComments);
 
-  const dispatch = useDispatch();
+  const getReplies = _id => {
+    return backendComments.filter(comment => comment.parent._id === _id);
+  };
+  // useEffect(() => {
+  //   dispatch(commentsActions.load(props.id));
+  // }, [props.id]);
 
-  useEffect(() => {
-    dispatch(commentsActions.load(props.id));
-  }, [props.id]);
-
-  const select = useSelector(state => ({
-    comments: state.comments.comments,
-  }));
-
-  // const rootComments = select.comments.filter(comment => comment.parent._id === null);
-  // console.log(rootComments);
   return (
     <div className={cn('')}>
       <div className={cn('title')}>Comments</div>
-      {select.comments.map(comment => {
-        return <CommentsItem key={comment._id} comment={comment} />;
-      })}
+      <div className={cn('container')}>
+        {rootComments.map(rootComment => (
+          <CommentsItem key={rootComment._id} comment={rootComment} replies={getReplies(rootComments._id)}/>
+        ))}
+      </div>
     </div>
   );
 };
