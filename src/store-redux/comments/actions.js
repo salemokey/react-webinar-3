@@ -19,7 +19,7 @@ export default {
       }
     };
   },
-  addComment: (author, id, type, commentText) => {
+  addComment: (id, type, commentText) => {
     return async (dispatch, getState, services) => {
       const token = localStorage.getItem('token');
 
@@ -33,6 +33,8 @@ export default {
             parent: { _id: id, _type: type },
           }),
         });
+
+        dispatch({ type: 'ADD_COMMENT', items: res.data.result.items });
       } catch (e) {
         // Ошибка добавления комментария
         console.error('Ошибка добавления комментария:', e.message);
@@ -40,4 +42,3 @@ export default {
     };
   },
 };
-
