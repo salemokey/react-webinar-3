@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const CommentsForm = () => {
+const CommentsForm = ({ submitLabel, handleSubmit }) => {
+  const [text, setText] = useState('');
+  const onSubmit = event => {
+    event.preventDefault();
+    handleSubmit(text);
+  };
   return (
-    <div>
-      <h2>Комментарий</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Sed et odio at
-        justo faucibus lobortis. Proin consectetur, arcu id condimentum consectetur, mauris ex
-        consectetur neque, a rutrum dui velit vel velit. Sed vel ipsum id neque tempus semper.
-      </p>
-    </div>
+    <form action="" onSubmit={onSubmit}>
+      <textarea
+        className="comment-form-textarea"
+        value={text}
+        onChange={e => setText(e.target.value)}
+      />
+      <button className="comment-form-button">{submitLabel}</button>
+    </form>
   );
 };
 export default CommentsForm;

@@ -19,4 +19,25 @@ export default {
       }
     };
   },
+  addComment: (author, id, type, commentText) => {
+    return async (dispatch, getState, services) => {
+      const token = localStorage.getItem('token');
+
+      try {
+        const res = await services.api.request({
+          url: '/api/v1/comments',
+          method: 'POST',
+          headers: { token },
+          body: JSON.stringify({
+            text: commentText,
+            parent: { _id: id, _type: type },
+          }),
+        });
+      } catch (e) {
+        // Ошибка добавления комментария
+        console.error('Ошибка добавления комментария:', e.message);
+      }
+    };
+  },
 };
+
