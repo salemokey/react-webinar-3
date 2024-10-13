@@ -2,10 +2,14 @@ import React, { memo, useEffect } from 'react';
 import CommentsItem from '../../components/comments-item';
 import { cn as bem } from '@bem-react/classname';
 import CommentsForm from '../../components/comments-form';
+import useSelector from '../../hooks/use-selector';
 
 const Comments = props => {
   const cn = bem('comments');
 
+  const select = useSelector(state => ({
+    exists: state.session.exists,
+  }));
   // Логирование пропсов
   console.log('Пропсы Comments:', props);
 
@@ -21,20 +25,29 @@ const Comments = props => {
   };
 
   return (
-    <div className={cn('')}>
-      <div className={cn('title')}>Комментарии ({rootComments.length})</div>
-      <div className={cn('container')}>
-        {rootComments.map(rootComment => (
-          <CommentsItem
-            key={rootComment._id}
-            comment={rootComment}
-            replies={getReplies(rootComment._id)}
+    <>
+      {select.exists ? (
+        <div className={cn('')}>
+          <div className={cn('title')}>Комментарии ({rootComments.length})</div>
+          <div className={cn('container')}>
+            {rootComments.map(rootComment => (
+              <CommentsItem
+                key={rootComment._id}
+                comment={rootComment}
+                replies={getReplies(rootComment._id)}
+              />
+            ))}
+          </div>
+          <div className={cn('form-title')}>Новый комментарий</div>
+          <CommentsForm
+            submitLabel="write"
+            onSubmit={props.onSubmit}
+            id={props.articleData._id}
+            type="article"
           />
-        ))}
-      </div>
-      <div className={cn('form-title')}>Новый комментарий</div>
-      <CommentsForm submitLabel="write" onSubmit={props.onSubmit} id={props.articleData._id} />
-    </div>
+          </div>
+      ) : null}
+    </>
   );
 };
 export default memo(Comments);

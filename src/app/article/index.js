@@ -60,7 +60,11 @@ function Article() {
       <Spinner active={select.waiting}>
         <ArticleCard article={select.article} onAdd={callbacks.addToBasket} t={t} />
       </Spinner>
-      <Comments comments={select.comments} onSubmit={callbacks.onSubmit} articleData={select.article}/>
+      <Comments
+        comments={select.comments}
+        onSubmit={callbacks.onSubmit}
+        articleData={select.article}
+      />
     </PageLayout>
   );
 }

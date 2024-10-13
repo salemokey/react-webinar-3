@@ -4,7 +4,7 @@ const CommentsForm = ({ submitLabel, onSubmit, ...props }) => {
   const [text, setText] = useState('');
   const onSubmitForm = event => {
     event.preventDefault();
-    onSubmit({ text, parent: { _id: props.id, _type: 'article' } });
+    onSubmit({ text, parent: { _id: props.id, _type: props.type } });
   };
   return (
     <form action="" onSubmit={onSubmitForm}>
