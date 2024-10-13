@@ -10,7 +10,7 @@ function reducer(state = initialState, action) {
     case ADD_COMMENT: {
       return {
         ...state,
-        comments: [...state.comments, action.commentData],
+        comments: [...state.comments, action.payload.data],
       };
     }
     case SET_COMMENTS: {

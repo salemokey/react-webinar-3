@@ -41,6 +41,13 @@ function Article() {
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
+
+    onSubmit: useCallback(
+      (id, type, commentText) => {
+        dispatch(commentsActions.addComment(id, type, commentText));
+      },
+      [store],
+    ),
   };
 
   return (
@@ -53,7 +60,7 @@ function Article() {
       <Spinner active={select.waiting}>
         <ArticleCard article={select.article} onAdd={callbacks.addToBasket} t={t} />
       </Spinner>
-      <Comments comments={select.comments} />
+      <Comments comments={select.comments} onSubmit={callbacks.onSubmit} articleData={select.article}/>
     </PageLayout>
   );
 }

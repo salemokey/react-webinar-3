@@ -19,22 +19,22 @@ export default {
       }
     };
   },
-  addComment: (id, type, commentText) => {
+  addComment: commentData => {
+    console.log(commentData);
     return async (dispatch, getState, services) => {
       const token = localStorage.getItem('token');
-
+      const data = {
+        text: commentData.commentText,
+        parent: { _id: commentData.id, _type: commentData.type },
+      };
       try {
         const res = await services.api.request({
-          url: '/api/v1/comments',
           method: 'POST',
-          headers: { token },
-          body: JSON.stringify({
-            text: commentText,
-            parent: { _id: id, _type: type },
-          }),
-        });
+          url: `/api/v1/comments`,
 
-        dispatch({ type: 'ADD_COMMENT', items: res.data.result.items });
+          body: JSON.stringify(commentData),
+        });
+        dispatch({ type: 'ADD_COMMENT', payload: { data: { ...res.data.result } } });
       } catch (e) {
         // Ошибка добавления комментария
         console.error('Ошибка добавления комментария:', e.message);
