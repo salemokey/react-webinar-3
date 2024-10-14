@@ -22,11 +22,7 @@ export default {
   addComment: commentData => {
     console.log(commentData);
     return async (dispatch, getState, services) => {
-      const token = localStorage.getItem('token');
-      const data = {
-        text: commentData.commentText,
-        parent: { _id: commentData.id, _type: commentData.type },
-      };
+      
       try {
         const res = await services.api.request({
           method: 'POST',

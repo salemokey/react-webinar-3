@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import CommentsItem from '../../components/comments-item';
 import { cn as bem } from '@bem-react/classname';
 import CommentsForm from '../../components/comments-form';
@@ -24,6 +24,8 @@ const Comments = props => {
     return backendComments.filter(comment => comment.parent && comment.parent._id === _id);
   };
 
+
+
   return (
     <>
       {select.exists ? (
@@ -35,6 +37,10 @@ const Comments = props => {
                 key={rootComment._id}
                 comment={rootComment}
                 replies={getReplies(rootComment._id)}
+                exists={select.exists}
+                onSubmit={props.onSubmit}
+                id={rootComment._id}
+                type="comment"
               />
             ))}
           </div>
@@ -45,8 +51,10 @@ const Comments = props => {
             id={props.articleData._id}
             type="article"
           />
-          </div>
-      ) : null}
+        </div>
+      ) : (
+        `Войдите, чтобы иметь возможность комментировать`
+      )}
     </>
   );
 };
