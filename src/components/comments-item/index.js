@@ -30,8 +30,8 @@ const CommentsItem = props => {
 
 
   return (
-    <div className={cn('')}>
-      <div className={cn('container')} style={indentStyle}>
+    <div className={cn('')} style={indentStyle}>
+      <div className={cn('container')} >
         <div className={cn('author-date')}>
           <span className="author">{props.comment.author?.profile?.name || 'Имя не указано'}</span>{' '}
           <span className="date">{date}</span>
@@ -45,8 +45,8 @@ const CommentsItem = props => {
         ) : (
           `Войдите чтобы ответить`
         )}
-      </div>
-      {isReplying && <CommentsForm onSubmit={callbacks.onSubmit} id={props.id} type="comment" />}
+      
+      {isReplying && <CommentsForm onSubmit={callbacks.onSubmit} id={props.id} type="comment" />}</div>
       {props.replies.length > 0 && (
         <div className={cn('replies-list')}>
           {props.replies.map(reply => (
@@ -60,7 +60,7 @@ const CommentsItem = props => {
                 onSubmit={callbacks.onSubmit}
                 onReply={callbacks.onReply}
                 comment={reply}
-                replies={props.getReplies(reply._id)}
+                replies={[]}
               />
             </div>
           ))}

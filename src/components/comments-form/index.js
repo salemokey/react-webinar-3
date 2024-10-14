@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './style.css';
 
 const CommentsForm = ({ submitLabel, onSubmit, ...props }) => {
   const [text, setText] = useState('');
@@ -7,13 +8,14 @@ const CommentsForm = ({ submitLabel, onSubmit, ...props }) => {
     onSubmit({ text, parent: { _id: props.id, _type: props.type }, name: props.name });
   };
   return (
-    <form action="" onSubmit={onSubmitForm}>
+    <form className="Comments-form" action="" onSubmit={onSubmitForm}>
+      {props.type === 'comment' && <div className="Comments-form-title">Новый ответ</div>}
       <textarea
-        className="comment-form-textarea"
+        className="Comments-form-textarea"
         value={text}
         onChange={e => setText(e.target.value)}
       />
-      <button className="comment-form-button">отправить</button>
+      <button className="Сommentы-form-button">отправить</button>
     </form>
   );
 };

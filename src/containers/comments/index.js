@@ -43,7 +43,6 @@ const Comments = props => {
                 onSubmit={props.onSubmit}
                 id={rootComment._id}
                 type="comment"
-                getReplies={getReplies}
               />
             ))}
           </div>
