@@ -22,7 +22,6 @@ export default {
   addComment: commentData => {
     console.log(commentData);
     return async (dispatch, getState, services) => {
-      
       try {
         const res = await services.api.request({
           method: 'POST',
@@ -30,7 +29,12 @@ export default {
 
           body: JSON.stringify(commentData),
         });
-        dispatch({ type: 'ADD_COMMENT', payload: { data: { ...res.data.result } } });
+        dispatch({
+          type: 'ADD_COMMENT',
+          payload: {
+            data: { ...res.data.result, author: { profile: { name: commentData.name } } },
+          },
+        });
       } catch (e) {
         // Ошибка добавления комментария
         console.error('Ошибка добавления комментария:', e.message);

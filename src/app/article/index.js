@@ -43,8 +43,8 @@ function Article() {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
 
     onSubmit: useCallback(
-      (id, type, commentText) => {
-        dispatch(commentsActions.addComment(id, type, commentText));
+      (id, type, commentText, name) => {
+        dispatch(commentsActions.addComment(id, type, commentText, name));
       },
       [store],
     ),
